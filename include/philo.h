@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:51:52 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/13 10:50:25 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/13 17:07:37 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ typedef enum e_opcode
 	DETACH,
 }			t_opcode;
 
+typedef enum e_access_flag
+{
+	SET,
+	GET,
+}			t_flag;
 
 typedef pthread_mutex_t t_mtx;
 typedef struct s_table	t_table;
