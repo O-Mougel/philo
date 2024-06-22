@@ -2,8 +2,15 @@
 
 NAME = philo
 
-SRCS_FILES = main.c\
-			 utils.c\
+SRCS_FILES = main.c \
+			 utils.c \
+			 dinner.c \
+			 init.c \
+			 parsing.c \
+			 safe_functions.c \
+			 setters_and_getters.c \
+			 synchro_utils.c \
+			 write.c
 
 INCLUDES = include/philo.h
 

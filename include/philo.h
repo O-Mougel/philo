@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:51:52 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/13 17:07:37 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:37:32 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-//*** OPCODE ***
+# define DEBUG_MODE 0
+//*** CODES ***
 
+/*
+ * OPCODE FOR THREAD AND MUTEX
+*/
 typedef enum e_opcode
 {
 	LOCK,
@@ -49,6 +53,32 @@ typedef enum e_opcode
 	DETACH,
 }			t_opcode;
 
+/*
+ * PHILO STATES
+*/
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}			  t_philo_status;
+
+/*
+ * GETTIME CODES
+*/
+typedef enum e_time_code
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}			t_time_code;
+
+/*
+ * GETTERS AND SETTERS CODE
+*/
 typedef enum e_access_flag
 {
 	SET,
@@ -81,6 +111,7 @@ typedef struct	s_philo
 	t_fork		*first_fork;
 	t_fork		*second_fork;
 	pthread_t	thread_id;
+	t_mtx		philo_mutex;
 	t_table		*table;
 }				t_philo;
 
@@ -96,6 +127,9 @@ struct s_table
 	long nbr_limits_meals;
 	long start_simulation;
 	bool end_simulation;
+	bool  all_threads_ready;
+	t_mtx table_mutex;
+	t_mtx write_mutex;
 	t_fork *forks;
 	t_philo *philos;
 };
@@ -104,6 +138,8 @@ struct s_table
 
 // ** utils **
 void  error_exit(const char *error);
+long  gettime(t_time_code time_code);
+void  precise_usleep(long usec, t_table *table);
 
 // ** parsing **
 void  parse_input(t_table *table, char **argv);
@@ -116,5 +152,19 @@ void  safe_mutex_handler(t_mtx *mutex, t_opcode opcode);
 
 // ** init **
 void  data_init(t_table *table);
+
+// ** getters and setters **
+bool	set_or_get_bool(t_flag flag, t_mtx *mutex, bool *val, bool new_val);
+long	set_or_get_long(t_flag flag, t_mtx *mutex, long *val, long new_val);
+bool  simulation_finnished(t_table *table);
+
+// ** synchro utils **
+void  wait_all_threads(t_table *table);
+
+// ** write functions ** //
+void  write_status(t_philo_status status, t_philo *philo, bool debug);
+
+// ** dinner ** //
+void  dinner_start(t_table *table);
 
 #endif

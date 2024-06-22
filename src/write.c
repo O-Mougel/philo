@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/21 11:01:35 by omougel           #+#    #+#             */
+/*   Updated: 2024/06/22 11:42:17 by omougel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/philo.h"
+
+static void  write_status_debug(t_philo_status status, t_philo *philo, long elapsed)
+{
+	if (status == TAKE_FIRST_FORK && !simulation_finnished(philo->table))
+		printf(W"%-6ld"RST" %d has taken his first fork\n", elapsed, philo->id);
+	if (status == TAKE_SECOND_FORK && !simulation_finnished(philo->table))
+		printf(W"%-6ld"RST" %d has taken his second fork\n", elapsed, philo->id);
+	if (status == EATING && !simulation_finnished(philo->table))
+		printf(W"%-6ld"RST" %d is eating",  elapsed, philo->id);
+	if (status == SLEEPING && !simulation_finnished(philo->table))
+		printf(W"%-6ld"RST" %d is sleeping",  elapsed, philo->id);
+	if (status == THINKING && !simulation_finnished(philo->table))
+		printf(W"%-6ld"RST" %d is thinking",  elapsed, philo->id);
+	if (status == DIED)
+		printf(RED"%-6ld %d died"RST,  elapsed, philo->id);
+}
+
+void  write_status(t_philo_status status, t_philo *philo, bool debug)
+{
+	long  elapsed;
+
+	elapsed = gettime(MILLISECOND) - philo->table->start_simulation;
+	if (philo->full) // TODO thread safe
+		return ;
+	safe_mutex_handler(&philo->table->write_mutex, LOCK);
+	if (debug)
+		write_status_debug(status, philo, elapsed); // 1:28 timecode
+	else
+	{
+		if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK)
+			&& !simulation_finnished(philo->table))
+			printf(W"%-6ld"RST" %d has taken a fork\n", elapsed, philo->id);
+		if (status == EATING && !simulation_finnished(philo->table))
+			printf(W"%-6ld"C" %d is eating\n"RST,  elapsed, philo->id);
+		if (status == SLEEPING && !simulation_finnished(philo->table))
+			printf(W"%-6ld"RST" %d is sleeping\n",  elapsed, philo->id);
+		if (status == THINKING && !simulation_finnished(philo->table))
+			printf(W"%-6ld"RST" %d is thinking\n",  elapsed, philo->id);
+		if (status == DIED)
+			printf(RED"%-6ld %d died\n"RST,  elapsed, philo->id);
+	}
+	safe_mutex_handler(&philo->table->write_mutex, UNLOCK);
+}
