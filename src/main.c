@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:43 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/13 10:57:37 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/26 11:32:47 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 		parse_input(&table, argv);
 		data_init(&table);
 		dinner_start(&table);
+		clean(&table);
 	}
 	else
 		error_exit(ERRMSG);

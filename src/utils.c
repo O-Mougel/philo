@@ -6,12 +6,11 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:11:32 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/21 11:27:31 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/26 11:48:02 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <unistd.h>
 
 void  error_exit(const char *error)
 {
@@ -55,4 +54,22 @@ long  gettime(t_time_code time_code)
 	else
 		error_exit("Wrong input to gettime!");
 	return (1337);
+}
+
+void  clean(t_table	*table)
+{
+	t_philo	*philo;
+	int	i;
+
+	i = -1;
+	while (++i < table->philo_nbr)
+	{
+		philo = table->philos + i;
+		safe_mutex_handler(&philo->philo_mutex, DESTROY);
+
+	}
+	safe_mutex_handler(&table->write_mutex, DESTROY);
+	safe_mutex_handler(&table->table_mutex, DESTROY);
+	free(table->forks);
+	free(table->philos);
 }

@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 08:01:16 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/21 16:54:43 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:12:16 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 		philo->first_fork = &forks[philo_position];
 		philo->second_fork = &forks[(philo_position + 1) % philo_nbr];
 	}
-
-	
 }
 
 static void	philo_init(t_table *table)
@@ -53,6 +51,7 @@ void  data_init(t_table *table)
 	i = -1;
 	table->end_simulation = false;
 	table->all_threads_ready = false;
+	table->thread_running_nbr = 0;
 	table->philos = safe_malloc(table->philo_nbr * sizeof(t_philo));
 	safe_mutex_handler(&table->table_mutex, INIT);
 	safe_mutex_handler(&table->write_mutex, INIT);

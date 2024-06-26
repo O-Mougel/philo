@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 11:01:35 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/22 11:42:17 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/26 11:28:09 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 static void  write_status_debug(t_philo_status status, t_philo *philo, long elapsed)
 {
 	if (status == TAKE_FIRST_FORK && !simulation_finnished(philo->table))
-		printf(W"%-6ld"RST" %d has taken his first fork\n", elapsed, philo->id);
+		printf(W"%-6ld"RST" %d has taken the first fork 🍽️\t\t\tn."B"[🍴 %d 🍴]\n"RST, elapsed, philo->id, philo->first_fork->fork_id);
 	if (status == TAKE_SECOND_FORK && !simulation_finnished(philo->table))
-		printf(W"%-6ld"RST" %d has taken his second fork\n", elapsed, philo->id);
+		printf(W"%-6ld"RST" %d has taken the second fork 🍽️\t\t\tn."B"[🍴 %d 🍴]\n"RST, elapsed, philo->id, philo->second_fork->fork_id);
 	if (status == EATING && !simulation_finnished(philo->table))
-		printf(W"%-6ld"RST" %d is eating",  elapsed, philo->id);
+		printf(W"%-6ld"C" %d is eating 🍝\t\t\t"Y"[🍝 %ld 🍝]\n"RST, elapsed, philo->id, philo->meals_counter);
 	if (status == SLEEPING && !simulation_finnished(philo->table))
-		printf(W"%-6ld"RST" %d is sleeping",  elapsed, philo->id);
+		printf(W"%-6ld"RST" %d is sleeping 😴 \n",  elapsed, philo->id);
 	if (status == THINKING && !simulation_finnished(philo->table))
-		printf(W"%-6ld"RST" %d is thinking",  elapsed, philo->id);
+		printf(W"%-6ld"RST" %d is thinking 🤔\n",  elapsed, philo->id);
 	if (status == DIED)
-		printf(RED"%-6ld %d died"RST,  elapsed, philo->id);
+		printf(RED"\t\t💀💀💀 %-6ld %d died   💀💀💀\n"RST,  elapsed, philo->id);
 }
 
 void  write_status(t_philo_status status, t_philo *philo, bool debug)

@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:51:52 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/22 11:37:32 by omougel          ###   ########.fr       */
+/*   Updated: 2024/06/26 13:46:46 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 //*** CODES ***
 
 /*
@@ -128,6 +128,8 @@ struct s_table
 	long start_simulation;
 	bool end_simulation;
 	bool  all_threads_ready;
+	long  thread_running_nbr;
+	pthread_t monitor;
 	t_mtx table_mutex;
 	t_mtx write_mutex;
 	t_fork *forks;
@@ -140,6 +142,7 @@ struct s_table
 void  error_exit(const char *error);
 long  gettime(t_time_code time_code);
 void  precise_usleep(long usec, t_table *table);
+void  clean(t_table	*table);
 
 // ** parsing **
 void  parse_input(t_table *table, char **argv);
@@ -160,11 +163,18 @@ bool  simulation_finnished(t_table *table);
 
 // ** synchro utils **
 void  wait_all_threads(t_table *table);
+bool  all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+void  increase_long(t_mtx *mutex, long *value);
+void  de_synchronize_philos(t_philo *philo);
 
 // ** write functions ** //
 void  write_status(t_philo_status status, t_philo *philo, bool debug);
 
 // ** dinner ** //
 void  dinner_start(t_table *table);
+void	thinking(t_philo *philo, bool pre_simulation);
+
+// ** monitor ** //
+void  *monitor_dinner(void *data);
 
 #endif

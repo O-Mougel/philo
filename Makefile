@@ -10,7 +10,8 @@ SRCS_FILES = main.c \
 			 safe_functions.c \
 			 setters_and_getters.c \
 			 synchro_utils.c \
-			 write.c
+			 write.c \
+			 monitor.c
 
 INCLUDES = include/philo.h
 
@@ -20,7 +21,7 @@ OBJS_DIR = .objects/
 SRCS = $(addprefix ${SRCS_DIR},${SRCS_FILES})
 OBJS = $(patsubst %.c, ${OBJS_DIR}%.o, ${SRCS})
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 all: ${NAME}
 	@echo "${GREEN}${NAME} done!${END}"
