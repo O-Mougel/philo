@@ -12,20 +12,20 @@
 
 #include "../include/philo.h"
 
-static inline bool is_space(char c)
+static inline bool	is_space(char c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }
 
-static inline bool is_digit(char c)
+static inline bool	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
 static long	ft_atol(const char *str)
 {
-	int	i;
-	long  number;
+	int		i;
+	long	number;
 
 	i = 0;
 	number = 0;
@@ -48,7 +48,7 @@ static long	ft_atol(const char *str)
 	return (number);
 }
 
-void  parse_input(t_table *table, char **argv)
+void	parse_input(t_table *table, char **argv)
 {
 	table->philo_nbr = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
@@ -61,5 +61,4 @@ void  parse_input(t_table *table, char **argv)
 		table->nbr_limits_meals = ft_atol(argv[5]);
 	else
 		table->nbr_limits_meals = -1;
-
 }

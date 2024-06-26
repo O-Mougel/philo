@@ -24,5 +24,5 @@ int	main(int argc, char **argv)
 		clean(&table);
 	}
 	else
-		error_exit(ERRMSG);
+		error_exit(CORRECTMSG);
 }

@@ -16,11 +16,11 @@ bool	set_or_get_bool(t_flag flag, t_mtx *mutex, bool *val, bool new_val)
 {
 	bool	ret;
 
-  safe_mutex_handler(mutex, LOCK);
+	safe_mutex_handler(mutex, LOCK);
 	if (flag == SET)
 		*val = new_val;
 	ret = *val;
-  safe_mutex_handler(mutex, UNLOCK);
+	safe_mutex_handler(mutex, UNLOCK);
 	return (ret);
 }
 
@@ -28,15 +28,16 @@ long	set_or_get_long(t_flag flag, t_mtx *mutex, long *val, long new_val)
 {
 	long	ret;
 
-  safe_mutex_handler(mutex, LOCK);
+	safe_mutex_handler(mutex, LOCK);
 	if (flag == SET)
 		*val = new_val;
 	ret = *val;
-  safe_mutex_handler(mutex, UNLOCK);
+	safe_mutex_handler(mutex, UNLOCK);
 	return (ret);
 }
 
-bool  simulation_finnished(t_table *table)
+bool	simulation_finnished(t_table *table)
 {
-	return (set_or_get_bool(GET, &table->table_mutex, &table->end_simulation, -1));
+	return (set_or_get_bool(GET, &table->table_mutex, &table->end_simulation,
+			-1));
 }
