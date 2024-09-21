@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:51:24 by omougel           #+#    #+#             */
-/*   Updated: 2024/09/21 15:10:29 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:35:00 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ static void	eat(t_philo	*philo)
 static void	eat(t_philo	*philo)
 {
 	while (set_or_get_bool(GET, &philo->first_fork->fork, &philo->first_fork->status, -1) == false)
-		;
+		usleep(200);
 	set_or_get_bool(SET, &philo->first_fork->fork, &philo->first_fork->status, false);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (set_or_get_bool(GET, &philo->second_fork->fork, &philo->second_fork->status, -1) == false)
-		;
+		usleep(200);
 	set_or_get_bool(SET, &philo->second_fork->fork, &philo->second_fork->status, false);
 	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
 	set_or_get_long(SET, &philo->philo_mutex, &philo->last_meal_time,

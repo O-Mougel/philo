@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:11:32 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/26 11:48:02 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:35:06 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	precise_usleep(long usec, t_table *table)
 			usleep(rem / 2);
 		else
 			while (gettime(MICROSECOND) - start < usec)
-				;
+		    usleep(200);
 	}
 }
 

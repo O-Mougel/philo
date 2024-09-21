@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:21:10 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/25 18:12:10 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:35:03 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*monitor_dinner(void *data)
 	table = (t_table *)data;
 	while (!all_threads_running(&table->table_mutex, &table->thread_running_nbr,
 			table->philo_nbr))
-		;
+		usleep(200);
 	while (!simulation_finnished(table))
 	{
 		i = -1;
