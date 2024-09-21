@@ -17,7 +17,7 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 {
 	int	philo_nbr;
 
-	philo_nbr = philo->table->philo_nbr;	
+	philo_nbr = philo->table->philo_nbr;
 	philo->first_fork = &forks[(philo_position + 1) % philo_nbr];
 	philo->second_fork = &forks[philo_position];
 	if (philo->id % 2 == 0)
@@ -29,7 +29,7 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 
 static void	philo_init(t_table *table)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 
 	i = -1;
@@ -45,7 +45,7 @@ static void	philo_init(t_table *table)
 	}
 }
 
-void  data_init(t_table *table)
+void	data_init(t_table *table)
 {
 	int	i;
 

@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <stdbool.h>
 
-void  wait_all_threads(t_table *table)
+void	wait_all_threads(t_table *table)
 {
-	while (!set_or_get_bool(GET, &table->table_mutex, &table->all_threads_ready, -1))
+	while (!set_or_get_bool(GET, &table->table_mutex, &table->all_threads_ready,
+			-1))
 		;
 }
 
-bool  all_threads_running(t_mtx *mutex, long *threads, long philo_nbr)
+bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr)
 {
-	bool  ret;
+	bool	ret;
 
 	ret = false;
 	safe_mutex_handler(mutex, LOCK);
@@ -31,14 +31,14 @@ bool  all_threads_running(t_mtx *mutex, long *threads, long philo_nbr)
 	return (ret);
 }
 
-void  increase_long(t_mtx *mutex, long *value)
+void	increase_long(t_mtx *mutex, long *value)
 {
 	safe_mutex_handler(mutex, LOCK);
 	(*value)++;
 	safe_mutex_handler(mutex, UNLOCK);
 }
 
-void  de_synchronize_philos(t_philo *philo)
+void	de_synchronize_philos(t_philo *philo)
 {
 	if (philo->table->philo_nbr % 2 == 0)
 	{
@@ -51,4 +51,3 @@ void  de_synchronize_philos(t_philo *philo)
 			thinking(philo, true);
 	}
 }
-
