@@ -6,11 +6,12 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 08:01:16 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/25 18:12:16 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:02:28 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+#include <stdbool.h>
 
 static void	assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 {
@@ -60,6 +61,7 @@ void  data_init(t_table *table)
 	{
 		safe_mutex_handler(&table->forks[i].fork, INIT);
 		table->forks[i].fork_id = i;
+		table->forks[i].status = true;
 	}
 	philo_init(table);
 }

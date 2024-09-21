@@ -6,11 +6,12 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:51:24 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/26 13:43:16 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:02:16 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+#include <stdbool.h>
 
 void	thinking(t_philo *philo, bool pre_simulation)
 {
@@ -44,8 +45,7 @@ static void	*one_philo(void *data)
 		usleep(200);
 	return (NULL);
 }
-				 
-
+/*
 static void	eat(t_philo	*philo)
 {
 	safe_mutex_handler(&philo->first_fork->fork, LOCK);
@@ -61,8 +61,28 @@ static void	eat(t_philo	*philo)
 		set_or_get_bool(SET, &philo->philo_mutex, &philo->full, true);
 	safe_mutex_handler(&philo->first_fork->fork, UNLOCK);
 	safe_mutex_handler(&philo->second_fork->fork, UNLOCK);
-}
+}*/
 
+static void	eat(t_philo	*philo)
+{
+	while (set_or_get_bool(GET, &philo->first_fork->fork, &philo->first_fork->status, -1) == false)
+		;
+	set_or_get_bool(SET, &philo->first_fork->fork, &philo->first_fork->status, false);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+	while (set_or_get_bool(GET, &philo->second_fork->fork, &philo->second_fork->status, -1) == false)
+		;
+	set_or_get_bool(SET, &philo->second_fork->fork, &philo->second_fork->status, false);
+	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	set_or_get_long(SET, &philo->philo_mutex, &philo->last_meal_time,
+				 gettime(MILLISECOND));
+	philo->meals_counter++;
+	write_status(EATING, philo, DEBUG_MODE);
+	precise_usleep(philo->table->time_to_eat, philo->table);
+	if (philo->table->nbr_limits_meals > 0 && philo->meals_counter == philo->table->nbr_limits_meals)
+		set_or_get_bool(SET, &philo->philo_mutex, &philo->full, true);
+	set_or_get_bool(SET, &philo->first_fork->fork, &philo->first_fork->status, true);
+	set_or_get_bool(SET, &philo->second_fork->fork, &philo->second_fork->status, true);
+}
 
 void  *dinner_simulation(void *data)
 {

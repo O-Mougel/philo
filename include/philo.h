@@ -6,7 +6,7 @@
 /*   By: omougel <omougel@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:51:52 by omougel           #+#    #+#             */
-/*   Updated: 2024/06/26 13:46:46 by omougel          ###   ########.fr       */
+/*   Updated: 2024/09/21 14:49:13 by omougel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 //*** CODES ***
 
 /*
@@ -97,6 +97,7 @@ typedef struct	s_fork
 {
 	t_mtx	fork;
 	int		fork_id;
+	bool	status;
 }				t_fork;
 
 /*
